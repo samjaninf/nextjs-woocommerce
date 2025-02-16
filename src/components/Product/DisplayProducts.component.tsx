@@ -23,7 +23,6 @@ interface Variations {
 
 interface RootObject {
   __typename: string;
-  databaseId: number;
   name: string;
   onSale: boolean;
   slug: string;
@@ -55,7 +54,6 @@ const DisplayProducts = ({ products }: IDisplayProductsProps) => (
       {products ? (
         products.map(
           ({
-            databaseId,
             name,
             price,
             regularPrice,
@@ -78,11 +76,7 @@ const DisplayProducts = ({ products }: IDisplayProductsProps) => (
 
             return (
               <div key={uuidv4()} className="group">
-                <Link
-                  href={`/produkt/${encodeURIComponent(
-                    slug,
-                  )}?id=${encodeURIComponent(databaseId)}`}
-                >
+                <Link href={`/produkt/${encodeURIComponent(slug)}`}>
                   <div className="aspect-[3/4] relative overflow-hidden bg-gray-100">
                     {image ? (
                       <img
@@ -96,19 +90,17 @@ const DisplayProducts = ({ products }: IDisplayProductsProps) => (
                         id="product-image"
                         className="w-full h-full object-cover object-center transition duration-300 group-hover:scale-105"
                         alt={name}
-                        src={process.env.NEXT_PUBLIC_PLACEHOLDER_SMALL_IMAGE_URL}
+                        src={
+                          process.env.NEXT_PUBLIC_PLACEHOLDER_SMALL_IMAGE_URL
+                        }
                       />
                     )}
                   </div>
                 </Link>
-                <Link
-                  href={`/produkt/${encodeURIComponent(
-                    slug,
-                  )}?id=${encodeURIComponent(databaseId)}`}
-                >
+                <Link href={`/produkt/${encodeURIComponent(slug)}`}>
                   <span>
                     <div className="mt-4">
-                      <p className="text-base font-bold text-center cursor-pointer hover:text-gray-600 transition-colors">
+                      <p className="text-xl font-bold text-center cursor-pointer hover:text-gray-600 transition-colors">
                         {name}
                       </p>
                     </div>
@@ -117,19 +109,17 @@ const DisplayProducts = ({ products }: IDisplayProductsProps) => (
                 <div className="mt-2 text-center">
                   {onSale ? (
                     <div className="flex justify-center items-center space-x-2">
-                      <span className="text-red-600">
+                      <span className="text-xl font-bold text-red-600">
                         {variations && filteredVariantPrice(price, '')}
                         {!variations && salePrice}
                       </span>
-                      <span className="text-gray-500 text-sm line-through">
+                      <span className="text-lg text-gray-500 line-through">
                         {variations && filteredVariantPrice(price, 'right')}
                         {!variations && regularPrice}
                       </span>
                     </div>
                   ) : (
-                    <span className="text-gray-900">
-                      {price}
-                    </span>
+                    <span className="text-lg text-gray-900">{price}</span>
                   )}
                 </div>
               </div>
